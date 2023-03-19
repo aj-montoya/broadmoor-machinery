@@ -11,7 +11,9 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "astro": "^2.0.18"
+    "@popperjs/core": "^2.11.6",
+    "astro": "^2.0.18",
+    "bootstrap": "^5.2.3"
   },
   "devDependencies": {
     "prettier": "2.8.4",
