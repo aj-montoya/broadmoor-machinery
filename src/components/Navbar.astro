@@ -67,21 +67,17 @@ const { page } = Astro.props;
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav ms-auto">
         {
-          navbar.map((nav) =>
-            nav.page === page ? (
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href={nav.href}>
-                  {nav.label}
-                </a>
-              </li>
-            ) : (
-              <li class="nav-item">
-                <a class="nav-link" href={nav.href}>
-                  {nav.label}
-                </a>
-              </li>
-            )
-          )
+          navbar.map((nav) => (
+            <li class="nav-item">
+              <a
+                class={nav.page === page ? "nav-link active" : "nav-link"}
+                aria-current={nav.page === page ? "page" : "false"}
+                href={nav.href}
+              >
+                {nav.label}
+              </a>
+            </li>
+          ))
         }
       </ul>
     </div>
