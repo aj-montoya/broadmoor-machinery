@@ -7,7 +7,11 @@ const slides = await contentfulClient
   .getEntries<CarouselSlide>({
     content_type: "carouselSlide",
   })
-  .then((collection) => collection.items);
+  .then((collection) =>
+    collection.items.sort(
+      (slide1, slide2) => slide1.fields.order - slide2.fields.order
+    )
+  );
 ---
 
 <div id="carousel" class="carousel slide">
@@ -38,8 +42,8 @@ const slides = await contentfulClient
             alt={slide.fields.alt}
           />
           <div class="carousel-caption d-none d-md-block">
-            <h5>{slide.fields.label}</h5>
-            <p>{slide.fields.description}</p>
+            {slide.fields.label && <h5>{slide.fields.label}</h5>}
+            {slide.fields.description && <p>{slide.fields.description}</p>}
           </div>
         </div>
       ))
