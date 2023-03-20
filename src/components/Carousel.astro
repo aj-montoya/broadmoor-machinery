@@ -1,0 +1,66 @@
+---
+import { Picture } from "@astrojs/image/components";
+import { contentfulClient } from "@lib/contentful";
+import type { CarouselSlide } from "@lib/contentful";
+
+const slides = await contentfulClient
+  .getEntries<CarouselSlide>({
+    content_type: "carouselSlide",
+  })
+  .then((collection) => collection.items);
+---
+
+<div id="carousel" class="carousel slide">
+  <div class="carousel-indicators">
+    {
+      slides.map((_, index) => (
+        <button
+          type="button"
+          data-bs-target="#carousel"
+          data-bs-slide-to={index}
+          class={index === 0 ? "active" : ""}
+          aria-current={index === 0 ? "true" : "false"}
+          aria-label={`Slide ${index + 1}`}
+        />
+      ))
+    }
+  </div>
+  <div class="carousel-inner">
+    {
+      slides.map((slide, index) => (
+        <div class={index === 0 ? "carousel-item active" : "carousel-item"}>
+          <Picture
+            class="d-block"
+            src={slide.fields.image.fields.file.url}
+            widths={[200, 400, 800]}
+            aspectRatio="5:3"
+            sizes="(max-width: 800px) 100vw, 800px"
+            alt={slide.fields.alt}
+          />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>{slide.fields.label}</h5>
+            <p>{slide.fields.description}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#carousel"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#carousel"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>

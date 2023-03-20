@@ -1,4 +1,5 @@
 import contentful from "contentful";
+import type { Asset } from "contentful";
 
 export const contentfulClient = contentful.createClient({
   space: import.meta.env.CONTENTFUL_SPACE_ID,
@@ -7,3 +8,11 @@ export const contentfulClient = contentful.createClient({
     : import.meta.env.CONTENTFUL_DELIVERY_TOKEN,
   host: import.meta.env.DEV ? "preview.contentful.com" : "cdn.contentful.com",
 });
+
+export interface CarouselSlide {
+  image: Asset;
+  label?: string;
+  description?: string;
+  order: number;
+  alt: string;
+}

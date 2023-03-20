@@ -1,11 +1,18 @@
 ---
 import Page from "@layouts/Page.astro";
 import Navbar from "@components/Navbar.astro";
+import Carousel from "@components/Carousel.astro";
 ---
 
 <Page>
   <Navbar page="home" />
   <main>
-    <h1>Home</h1>
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-auto">
+          <Carousel />
+        </div>
+      </div>
+    </div>
   </main>
 </Page>
