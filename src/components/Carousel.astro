@@ -14,7 +14,7 @@ const slides = await contentfulClient
   );
 ---
 
-<div id="carousel" class="carousel slide">
+<div id="carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
   <div class="carousel-indicators">
     {
       slides.map((_, index) => (
@@ -36,9 +36,9 @@ const slides = await contentfulClient
           <Picture
             class="d-block"
             src={slide.fields.image.fields.file.url}
-            widths={[200, 400, 800]}
+            widths={[200, 400, 800, 1000]}
             aspectRatio="5:3"
-            sizes="(max-width: 800px) 100vw, 800px"
+            sizes="(max-width: 1000px) 100vw, 1000px"
             alt={slide.fields.alt}
           />
           <div class="carousel-caption d-none d-md-block">
