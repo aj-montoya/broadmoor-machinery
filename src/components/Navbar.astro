@@ -1,6 +1,42 @@
 ---
+type Page = "home" | "manufacturers" | "store" | "showcase" | "contact";
+
+interface NavItem {
+  page: Page;
+  label: string;
+  href: string;
+}
+
+const navbar: NavItem[] = [
+  {
+    page: "home",
+    label: "Home",
+    href: "/",
+  },
+  {
+    page: "manufacturers",
+    label: "Manufacturers",
+    href: "/manufacturers",
+  },
+  {
+    page: "store",
+    label: "In-Stock Machines",
+    href: "/store",
+  },
+  {
+    page: "showcase",
+    label: "Job Showcase",
+    href: "/showcase",
+  },
+  {
+    page: "contact",
+    label: "Contact",
+    href: "/contact",
+  },
+];
+
 export interface Props {
-  page: string;
+  page: Page;
 }
 
 const { page } = Astro.props;
@@ -8,7 +44,15 @@ const { page } = Astro.props;
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="/">
+      <img
+        src="logo.jpeg"
+        alt="Broadmoor Machinery"
+        width="265"
+        height="50"
+        class="d-inline-block"
+      />
+    </a>
     <button
       class="navbar-toggler"
       type="button"
@@ -21,32 +65,24 @@ const { page } = Astro.props;
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Dropdown link
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
+      <ul class="navbar-nav ms-auto">
+        {
+          navbar.map((nav) =>
+            nav.page === page ? (
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href={nav.href}>
+                  {nav.label}
+                </a>
+              </li>
+            ) : (
+              <li class="nav-item">
+                <a class="nav-link" href={nav.href}>
+                  {nav.label}
+                </a>
+              </li>
+            )
+          )
+        }
       </ul>
     </div>
   </div>
