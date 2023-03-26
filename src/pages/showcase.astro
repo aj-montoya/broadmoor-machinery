@@ -1,11 +1,44 @@
 ---
 import Page from "@layouts/Page.astro";
 import Navbar from "@components/Navbar.astro";
+import { contentfulClient } from "@lib/contentful";
+import type { CompletedJob } from "@lib/contentful";
+import MultiCarousel from "@components/Multi-Carousel.astro";
+
+const jobs = await contentfulClient.getEntries<CompletedJob>({
+  content_type: "completedJob",
+});
 ---
 
 <Page title="Job Showcase">
   <Navbar page="showcase" />
   <main>
-    <h1>Job Showcase</h1>
+    <div class="container mt-3 mt-md-4 mt-lg-5">
+      {
+        jobs.items.map((job) => (
+          <div class="grid mb-3 mb-md-4 mb-lg-5">
+            <div class="row">
+              <div class="col">
+                <h1>{job.fields.jobName}</h1>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <p>{job.fields.description}</p>
+              </div>
+              <div />
+            </div>
+            <div class="row">
+              <div class="col">
+                <MultiCarousel
+                  id={job.fields.jobName}
+                  images={job.fields.images}
+                />
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
   </main>
 </Page>

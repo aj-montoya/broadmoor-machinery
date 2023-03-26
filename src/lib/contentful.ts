@@ -16,3 +16,9 @@ export interface CarouselSlide {
   order: number;
   alt: string;
 }
+
+export interface CompletedJob {
+  jobName: string;
+  images: Asset[];
+  description?: string;
+}

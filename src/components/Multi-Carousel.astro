@@ -1,0 +1,72 @@
+---
+import "../styles/lightbox.scss";
+import type { Asset } from "contentful";
+
+export interface Props {
+  id: string;
+  images: Asset[];
+}
+
+const { id, images } = Astro.props;
+---
+
+<div class="lightbox" data-id={id}>
+  <div class="multi-carousel">
+    <div class="multi-carousel-inner">
+      {
+        images.map((image) => (
+          <div class="multi-carousel-item">
+            <img
+              src={image.fields.file.url}
+              data-mdb-img={image.fields.file.url}
+              alt={image.fields.title}
+              class="w-100"
+            />
+          </div>
+        ))
+      }
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      tabindex="0"
+      data-mdb-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      tabindex="0"
+      data-mdb-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+</div>
+<style>
+  .multi-carousel {
+    position: relative;
+  }
+
+  .multi-carousel .multi-carousel-inner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 0;
+  }
+
+  .multi-carousel .multi-carousel-inner .multi-carousel-item {
+    display: inline-block;
+    width: 100%;
+    font-size: 16px;
+    transition: all 0.3s ease-out;
+    padding: 0 3px;
+  }
+
+  .multi-carousel .multi-carousel-inner .multi-carousel-item img {
+    max-height: 200px;
+    object-fit: cover;
+  }
+</style>
